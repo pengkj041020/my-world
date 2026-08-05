@@ -11,7 +11,7 @@
     <WorldDetail v-if="activeSection" :section="activeSection" :realm="activeRealm" @back="goHome" />
 
     <main v-else id="top">
-      <section class="hero">
+      <section class="hero" :style="{ backgroundImage: `linear-gradient(rgba(12,13,15,.55),rgba(12,13,15,.75)), url(${yaoImg})` }">
         <div class="hero-content">
           <span class="eyebrow">原创世界观设定集</span>
           <h1>三界</h1>
@@ -58,6 +58,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import WorldDetail from './components/WorldDetail.vue'
 import { updates, worldRealms, worldSections } from './data/worldSections'
+import yaoImg from './assets/Yao.png'
 
 const currentRealmSlug = ref('')
 const currentSectionSlug = ref('')
@@ -100,7 +101,7 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', syncRoute))
 .archive-label { color: #817d76; font-size: 12px; letter-spacing: .18em; }
 .nav-links { display: flex; gap: 30px; }.nav-links a { color: #bbb7af; font-size: 14px; text-decoration: none; }.nav-links a:hover { color: #f0d29b; }
 main { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-.hero { min-height: 620px; display: grid; place-items: center; text-align: center; background: radial-gradient(circle at 50% 36%,rgba(159,105,48,.2),transparent 42%),linear-gradient(180deg,#111316,#0c0d0f); border-bottom: 1px solid #292b2e; }
+.hero { min-height: 620px; display: grid; place-items: center; text-align: center; background-color: #0c0d0f; background-size: contain; background-position: center; background-repeat: no-repeat; border-bottom: 1px solid #292b2e; }
 .hero-content { max-width: 760px; padding: 96px 20px; }.eyebrow,.section-label { color: #bd965e; font-size: 12px; font-weight: 700; letter-spacing: .24em; }
 h1 { margin: 20px 0 14px; color: #fffaf0; font-family: "Noto Serif SC","Songti SC",SimSun,serif; font-size: clamp(54px,9vw,92px); line-height: 1.1; letter-spacing: .12em; }
 .slogan { color: #e2c48e; font: clamp(22px,3vw,30px) "Noto Serif SC","Songti SC",serif; letter-spacing: .14em; }.hero-description { margin: 24px auto 0; color: #aaa69f; font-size: 17px; line-height: 1.9; }
