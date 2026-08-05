@@ -3,5 +3,5 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: './',  // 相对路径，适配任意子目录
+  base: '/my-world/',  // ← 必须和你的仓库名一致
 })

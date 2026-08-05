@@ -6,7 +6,7 @@ export const worldSections = [
     groups: [
       { title: '三界结构', text: '真实界承载凡俗文明；引渡界连接生死与记忆；灵界则是能量、信仰和古老意志的归处。' },
       { title: '时代背景', text: '白狼宗覆灭后，旧有盟约失效。散落的宗族、部落与新兴组织开始争夺资源和话语权。' },
-      { title: '核心谜团', text: '白狼宗余脉为何消失、鸠坤殿从何而来，以及又一次“大年”将带来怎样的变化。' },
+      { title: '核心谜团', text: '白狼宗余脉为何消失、乾坤殿从何而来，以及又一次“大年”将带来怎样的变化。' },
     ],
   },
   {
@@ -17,7 +17,7 @@ export const worldSections = [
       { title: '千炼塔', text: '以锻造与机关术立足的城邦势力，掌握三界间最稳定的运输技术。' },
       { title: '九丈原与木柘', text: '前者崇尚武力与誓约，后者重视自然共生；两族在边境资源问题上长期对峙。' },
       { title: '寒山部落', text: '居于北境群山，保存着大撕裂之前的口述历史，对外来者保持谨慎。' },
-      { title: '鸠坤殿', text: '近年来在白泽域突然兴起的神秘势力，其成员身份与真正目的尚无人知晓。' },
+      { title: '乾坤殿', text: '近年来在白泽域突然兴起的神秘势力，其成员身份与真正目的尚无人知晓。' },
     ],
   },
   {
@@ -109,11 +109,70 @@ export const worldSections = [
     lead: '地图不仅标记地点，也记录距离、气候、交通与势力边界，为人物行动提供可信的空间尺度。',
     stats: [['已知区域', '五处'], ['核心地点', '白泽域'], ['危险区域', '界隙']],
     groups: [
-      { title: '白泽域', text: '位于中州的旧宗核心地带，遗迹密布，如今由鸠坤殿控制主要通道。' },
+      { title: '白泽域', text: '位于中州的旧宗核心地带，遗迹密布，如今由乾坤殿控制主要通道。' },
       { title: '北境寒山', text: '常年积雪，地势封闭。寒山部落熟悉只有冬季才会显现的古道。' },
       { title: '九丈原', text: '辽阔而干燥的高原，是商队必经之地，也是多个势力冲突最频繁的边界。' },
       { title: '界隙', text: '三界边缘的不稳定区域，空间和时间均可能失序，尚无完整地图。' },
     ],
+  },
+]
+
+// 三套档案当前沿用同一份初始内容，但必须保持为彼此独立的数据对象，
+// 便于后续分别完善为 3 × 6 个互不影响的详情界面。
+const copySectionsForRealm = (realmSlug, realmName) => worldSections.map((section) => ({
+  ...structuredClone(section),
+  archiveId: `${realmSlug}-${section.slug}`,
+  realmSlug,
+  realmName,
+}))
+
+export const realitySections = copySectionsForRealm('reality', '真实界')
+export const passageSections = copySectionsForRealm('passage', '引渡界')
+export const spiritSections = copySectionsForRealm('spirit', '灵界')
+
+const passageWorldBackground = passageSections.find((section) => section.slug === 'world')
+passageWorldBackground.lead = '引渡界是真实界与灵界连通的必经之路，灵魂介质与灵气的丰裕程度在真实界与灵界之间。旧秩序（白狼宗统一）崩解已有五百年，各方分裂势力早已重建了欣欣向荣的新文明。'
+passageWorldBackground.stats = [['纪年', '后白狼历 500 年'], ['核心地域', '白泽域'], ['主要势力', '五方割据']]
+passageWorldBackground.groups = [
+  { title: '西北疆域', text: '寒山部落和冰源部落各占一半，与极北之地的永夜族为邻。' },
+  { title: '正北疆域', text: '木柘部落依靠木系与自然系灵力的力量，以繁荣的农业稳稳立足。' },
+  { title: '中州 · 白泽域', text: '在白狼宗的废墟之上，兴起了一个不知来由的神秘组织——乾坤殿。' },
+  { title: '西方疆域', text: '金焰兽与银空兽的后裔们以精湛而历史悠久的瞳术，在九丈原站稳脚跟。' },
+  { title: '南方疆域', text: '从九丈原南迁的人们摸索出了一条火山中的炼体之路，"烬土"组织已然建立。' },
+]
+
+const realityWorldBackground = realitySections.find((section) => section.slug === 'world')
+realityWorldBackground.lead = '真实界是三界中灵气与灵魂介质最稀薄的一界。在真实界，灵魂被禁锢于体内，身体死亡，承载少许记忆和灵力的灵魂同样淬灭，归于天地间。而每一个新生生命都会由空间中的灵魂介质与灵气汇聚成一个灵魂。在真实界，产生的灵魂都十分弱小，能够感受到灵力的个体也很少。'
+realityWorldBackground.stats = []
+realityWorldBackground.groups = []
+
+const spiritWorldBackground = spiritSections.find((section) => section.slug === 'world')
+spiritWorldBackground.lead = '灵界是三界中灵气与灵魂介质最丰裕的一界。在这里不存在实体物质，一切都由灵魂介质与灵气组成。如果肉体来到这个世界，它会迅速腐烂消亡。这里是灵魂的乐园。灵界中不断起伏的灵魂介质大海会随时捏造出新的灵魂，也会随时终结一个灵魂的意识，让它重新归于灵魂介质大海中。要想在这里长久的生存，需要足够的幸运，以及足够强韧的灵魂。灵界的一切都是混乱的、无序的。'
+spiritWorldBackground.stats = []
+spiritWorldBackground.groups = []
+
+
+export const worldRealms = [
+  {
+    slug: 'reality',
+    name: '真实界',
+    label: 'THE MORTAL REALM',
+    desc: '凡俗文明生长之地，承载日常秩序、王朝更迭与众生百态。',
+    sections: realitySections,
+  },
+  {
+    slug: 'passage',
+    name: '引渡界',
+    label: 'THE PASSAGE REALM',
+    desc: '连接两端的中间世界，也是白狼宗覆灭后诸势力角逐之地。',
+    sections: passageSections,
+  },
+  {
+    slug: 'spirit',
+    name: '灵界',
+    label: 'THE SPIRIT REALM',
+    desc: '灵气、信仰与古老意志的归处，隐藏着三界秩序更深层的源头。',
+    sections: spiritSections,
   },
 ]
 

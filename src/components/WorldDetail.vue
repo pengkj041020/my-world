@@ -1,22 +1,23 @@
 <template>
   <main class="detail-page">
-    <button class="back-button" type="button" @click="$emit('back')">← 返回世界总览</button>
+    <button class="back-button" type="button" @click="$emit('back')">← 返回三界总览</button>
     <header class="detail-hero">
       <span class="detail-icon">{{ section.icon }}</span>
-      <p>WORLD ARCHIVE · {{ section.slug.toUpperCase() }}</p>
+      <p>{{ realm.label }} · {{ section.slug.toUpperCase() }}</p>
+      <span class="realm-name">{{ realm.name }}</span>
       <h1>{{ section.name }}</h1>
       <div class="title-rule"></div>
       <p class="detail-lead">{{ section.lead }}</p>
     </header>
 
-    <dl class="stats-grid">
+    <dl v-if="section.stats?.length" class="stats-grid">
       <div v-for="stat in section.stats" :key="stat[0]">
         <dt>{{ stat[0] }}</dt>
         <dd>{{ stat[1] }}</dd>
       </div>
     </dl>
 
-    <section class="content-section">
+    <section v-if="section.groups?.length" class="content-section">
       <div class="content-heading">
         <span>01</span>
         <div><p>CONTENT FRAMEWORK</p><h2>内容框架</h2></div>
@@ -62,7 +63,7 @@
 </template>
 
 <script setup>
-defineProps({ section: { type: Object, required: true } })
+defineProps({ section: { type: Object, required: true }, realm: { type: Object, required: true } })
 defineEmits(['back'])
 </script>
 
@@ -72,6 +73,7 @@ defineEmits(['back'])
 .back-button:hover { color: #e6c98f; }
 .detail-hero { max-width: 790px; padding: 90px 0 74px; }
 .detail-icon { display: block; color: #d4ad70; font-size: 36px; margin-bottom: 30px; }
+.realm-name { display: inline-block; margin-top: 18px; padding: 6px 12px; color: #d9b879; background: rgba(164,126,72,.1); border: 1px solid #4d412f; border-radius: 999px; font-size: 12px; letter-spacing: .12em; }
 .detail-hero > p:first-of-type, .content-heading p { margin: 0; color: #ad8954; font-size: 11px; font-weight: 700; letter-spacing: .22em; }
 h1 { margin: 16px 0; color: #fffaf0; font-family: "Noto Serif SC", "Songti SC", SimSun, serif; font-size: clamp(48px, 7vw, 76px); letter-spacing: .08em; }
 .title-rule { width: 64px; height: 2px; margin: 28px 0; background: #a47e48; }
