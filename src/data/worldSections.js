@@ -141,6 +141,104 @@ passageWorldBackground.groups = [
   { title: '南方疆域', text: '从九丈原南迁的人们摸索出了一条火山中的炼体之路，"烬土"组织已然建立。' },
 ]
 
+const passageFactions = passageSections.find((section) => section.slug === 'factions')
+passageFactions.relations = {
+  nodes: [
+    { id: 'yongye', name: '永夜族', x: 300, y: 50 },
+    { id: 'hanshan', name: '寒山部落', x: 150, y: 150 },
+    { id: 'bingyuan', name: '冰源部落', x: 450, y: 150 },
+    { id: 'muzhe', name: '木柘部落', x: 740, y: 180 },
+    { id: 'jiuzhang', name: '九丈原', x: 180, y: 340 },
+    { id: 'qiankun', name: '乾坤殿', x: 470, y: 320 },
+    { id: 'jintu', name: '烬土组织', x: 280, y: 540 },
+    { id: 'qianlian', name: '千炼塔', x: 760, y: 430 },
+  ],
+  edges: [
+    { from: 'hanshan', to: 'bingyuan', type: 'ally', label: '西北并存' },
+    { from: 'hanshan', to: 'yongye', type: 'neutral', label: '北境为邻' },
+    { from: 'hanshan', to: 'jiuzhang', type: 'unknown', label: '关系待考' },
+    { from: 'bingyuan', to: 'yongye', type: 'neutral', label: '北境为邻' },
+    { from: 'bingyuan', to: 'muzhe', type: 'neutral', label: '粮食贸易' },
+    { from: 'jiuzhang', to: 'jintu', type: 'rival', label: '同源南迁' },
+    { from: 'qianlian', to: 'jiuzhang', type: 'ally', label: '兵器贸易' },
+    { from: 'qianlian', to: 'muzhe', type: 'ally', label: '粮铁互市' },
+    { from: 'qiankun', to: 'muzhe', type: 'ally', label: '粮食贸易' },
+    { from: 'qiankun', to: 'jiuzhang', type: 'unknown', label: '关系待考' },
+    { from: 'qiankun', to: 'qianlian', type: 'rival', label: '敌对？' },
+  ],
+}
+
+const passageCharacters = passageSections.find((section) => section.slug === 'characters')
+passageCharacters.lead = '引渡界各方势力交错，每一个名字背后都藏着一段未被书写的历史。'
+passageCharacters.stats = [['已收录', '4 位'], ['主要阵营', '多阵营'], ['档案状态', '持续补充']]
+passageCharacters.groups = []
+// 批量预加载 src/assets/characters/ 下的角色立绘
+// 图片文件名需与角色 id 一致，如 c1.png 对应 id: 'c1'
+const characterPortraits = import.meta.glob('../assets/characters/*.{png,jpg,jpeg,webp,svg}', { eager: true, import: 'default' })
+const getPortrait = (id) => {
+  const entry = Object.entries(characterPortraits).find(([path]) => path.includes(`/${id}.`))
+  return entry ? entry[1] : ''
+}
+// 批量预加载 src/assets/characters/bg/ 下的角色背景图
+// 图片文件名需与角色 id 一致，如 c1.png 对应 id: 'c1'
+const characterBgs = import.meta.glob('../assets/characters/bg/*.{png,jpg,jpeg,webp,svg}', { eager: true, import: 'default' })
+const getBg = (id) => {
+  const entry = Object.entries(characterBgs).find(([path]) => path.includes(`/${id}.`))
+  return entry ? entry[1] : ''
+}
+passageCharacters.characters = [
+  {
+    id: 'c1',
+    name: '林骥玄',
+    role: '穿越者 · 自真实界来',
+    brief: '原主为乾坤殿老殿主的长孙，与当下的乾坤殿少主有灵契绑定。',
+    detail: [
+      { label: '出身', text: '待补充' },
+      { label: '目标', text: '待补充' },
+      { label: '能力', text: '待补充' },
+      { label: '关系', text: '与寒山部落巡猎者亦师亦友；因其纹章，被乾坤殿视为重点关注对象。' },
+    ],
+  },
+  {
+    id: 'c2',
+    name: '凌元朔',
+    role: '乾坤殿 · 少殿主',
+    brief: '曾是林骥玄的笔友，后两人一起在暮云州上学。',
+    detail: [
+      { label: '出身', text: '无人知晓其来历。五百年来白泽域从未有过名为"乾坤殿"的组织。' },
+      { label: '目标', text: '整合白狼宗旧土，重建中州秩序——至少表面上如此。' },
+      { label: '能力', text: '传闻修为深不可测，能以一人之力镇压整座白泽域的灵气潮汐。' },
+      { label: '关系', text: '与九丈原、千炼塔关系紧张；对木柘示好以换取粮食供给。' },
+    ],
+  },
+  {
+    id: 'c3',
+    name: '焰瞳·赤烈',
+    role: '九丈原 · 金焰兽后裔',
+    brief: '九丈原年轻一代最强的瞳术修行者，血脉冲突的承受者。',
+    detail: [
+      { label: '出身', text: '九丈原金焰兽主家嫡系，自幼承受火与雷血脉冲突之苦。' },
+      { label: '目标', text: '证明即便不依赖通婚，也能压制血脉冲突，为家族寻找新的出路。' },
+      { label: '能力', text: '火属性瞳术造诣极高，但雷属性天赋被刻意压制，一旦失控便会经脉受损。' },
+      { label: '关系', text: '视烬土组织的南迁者为"逃避者"；与千炼塔有兵器定制往来。' },
+    ],
+  },
+  {
+    id: 'c4',
+    name: '锻骨·铁衡',
+    role: '烬土组织 · 锻体宗师',
+    brief: '从九丈原南迁的修行者，开拓出火山锻体之路的先驱。',
+    detail: [
+      { label: '出身', text: '原九丈原银空兽旁系，因缺乏瞳术天赋而南迁至上南州火山带。' },
+      { label: '目标', text: '让烬土成为不被血脉垄断、凭实力立足的新势力。' },
+      { label: '能力', text: '火属性锻体修为深厚，能短时间承受岩浆灼烧，以肉身锻造灵器。' },
+      { label: '关系', text: '与九丈原旧家有解不开的旧怨；欢迎所有不被重视的修行者加入烬土。' },
+    ],
+  },
+]
+// 为每个角色匹配对应的立绘图片与背景图
+passageCharacters.characters.forEach((c) => { c.image = getPortrait(c.id); c.bgImage = getBg(c.id) })
+
 const realityWorldBackground = realitySections.find((section) => section.slug === 'world')
 realityWorldBackground.lead = '真实界是三界中灵气与灵魂介质最稀薄的一界。在真实界，灵魂被禁锢于体内，身体死亡，承载少许记忆和灵力的灵魂同样淬灭，归于天地间。而每一个新生生命都会由空间中的灵魂介质与灵气汇聚成一个灵魂。在真实界，产生的灵魂都十分弱小，能够感受到灵力的个体也很少。'
 realityWorldBackground.stats = []

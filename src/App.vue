@@ -13,7 +13,7 @@
     <main v-else id="top">
       <section class="hero" :style="{ backgroundImage: `linear-gradient(rgba(12,13,15,.55),rgba(12,13,15,.75)), url(${yaoImg})` }">
         <div class="hero-content">
-          <span class="eyebrow">原创世界观设定集</span>
+          <span class="eyebrow">原创世界观设定集@元朔|朔北Yuan</span>
           <h1>三界</h1>
           <p class="slogan">真实界 · 引渡界 · 灵界</p>
           <p class="hero-description">分久必合，合久必分。又一次大年将至末尾……</p>
